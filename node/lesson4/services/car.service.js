@@ -27,14 +27,14 @@ module.exports = {
                 price: car.price,
                 year: car.year
             },
-                {where: {id: id}
+                {where: {id}
                 })
         },
 
         delete: async (id) => {
        const Car = connection.getModel('Car');
        return Car.destroy({
-           where: {id: id}
+           where: {id}
        })
    }
 };
