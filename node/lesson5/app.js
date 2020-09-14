@@ -1,3 +1,4 @@
+// noinspection DuplicatedCode
 const express = require('express');
 const app = express();
 
@@ -11,10 +12,14 @@ const apiRouter = require('./routes/api.router');
 
 app.use('/api', apiRouter);
 
-app.use('/', (req, res) => {
-    res.send('all good')
+app.use('*', (err, req, res, next) => {
+    res
+        .status(err.status || 404)
+        .json({
+            message: err.message || 'NOT FOUND',
+            code: err.customCode || ''
+        })
 });
-
 
 app.listen(5000, (err) => {
     if (err) {
