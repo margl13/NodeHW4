@@ -5,7 +5,7 @@ module.exports = {
         try {
             const cars = await carService.findAll();
 
-            res.json(cars);
+            res.status(200).json(cars);
         } catch (err) {
             res.json(err.message)
         }
@@ -23,7 +23,7 @@ module.exports = {
     findById: async (req, res) => {
         try {
             const car = await carService.findById(req.params.id);
-            res.json(car);
+            res.status(200).json(car);
         }
         catch (err) {
             res.json(err.message);
@@ -32,10 +32,10 @@ module.exports = {
 
     update: async (req, res) => {
         try {
-           await carService.update(req.params.id, req.body);
-            res.status(201).end('Car updated');
-        } catch (e) {
-            res.json(e.message)
+           const car = await carService.update(req.params.id, req.body);
+            res.status(200).end('Car updated');
+        } catch (err) {
+            res.json(err.message)
         }
     },
 
@@ -43,8 +43,8 @@ module.exports = {
         try {
             carService.destroy(req);
             res.status(201).end('Car destroyed');
-        } catch (e) {
-            res.json(e.message)
+        } catch (err) {
+            res.json(err.message)
 
         }
     }
