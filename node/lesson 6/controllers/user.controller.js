@@ -1,5 +1,5 @@
 const {userService} = require('../services');
-const {hashPassword} = require('../helpers')
+const {hashPassword} = require('../helpers');
 
 module.exports = {
 

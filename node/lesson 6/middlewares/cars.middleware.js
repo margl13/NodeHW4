@@ -1,4 +1,4 @@
-const {ErrorHandler, errors, statusCodesEnum} = require('../error');
+const {ErrorHandler, carErrors, statusCodesEnum} = require('../error');
 const{carValidator: {newCarValidator, updateCarValidator} } = require('../validators');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
                 return next(new ErrorHandler(
                     error.details[0].message,
                     statusCodesEnum.BAD_REQUEST,
-                    errors.BAD_REQUEST_NOT_VALID_CAR.code))
+                    carErrors.BAD_REQUEST_NOT_VALID_CAR.code))
             }
             next();
         } catch (err) {

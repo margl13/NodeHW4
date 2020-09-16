@@ -1,8 +1,9 @@
 const {Router} = require('express');
+const carsRouter = Router();
 
 const {carController} = require('../controllers');
 const middleware = require('../middlewares/cars.middleware');
-const carsRouter = Router();
+
 
 carsRouter.get('/', carController.read);
 carsRouter.post('/', middleware.carsValidity, carController.create);
