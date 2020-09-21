@@ -1,4 +1,4 @@
-const service = require('../../services/user.servis')
+const service = require('../../services/user.servis');
 module.exports = (req, res, next) => {
     try {
         const { userName } = req.params;
