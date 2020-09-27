@@ -1,7 +1,19 @@
 <component name="ProjectDictionaryState">
   <dictionary name="mglub">
     <words>
+      <w>bcrypt</w>
+      <w>dotenv</w>
+      <w>gmail</w>
+      <w>mimetype</w>
+      <w>mimetypes</w>
+      <w>msword</w>
+      <w>newcars</w>
+      <w>newusers</w>
+      <w>officedocument</w>
+      <w>openxmlformats</w>
       <w>sequelize</w>
+      <w>spreadsheetml</w>
+      <w>wordprocessingml</w>
     </words>
   </dictionary>
 </component>
