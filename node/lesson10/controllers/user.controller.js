@@ -36,6 +36,8 @@ module.exports = {
                 const fileExtension = avatar.name.split('.').pop();
                 const photoName = `${uuid}.${fileExtension}`;
 
+
+
                 await fs.mkdir(path.resolve(process.cwd(), 'public', `./${photoDir}`), {recursive: true});
                 await avatar.mv(path.resolve(process.cwd(), 'public', `./${photoDir}`, `./${photoName}`));
                 await userService.update(newUser.id, {avatar: `${photoDir}/${photoName}` }, transaction);
@@ -66,7 +68,21 @@ module.exports = {
     update: async (req, res, next) => {
         const transaction = await transactionInstance();
         try {
-            const user = await userService.update(req.params.id, req.body, transaction);
+            const {body: user, avatar} = req;
+            await userService.update(req.params.id, req.body, transaction);
+
+            if (avatar) {
+                const photoDir = `/users/${req.params.id}/photos`;
+                const fileExtension = avatar.name.split('.').pop();
+                const photoName = `${uuid}.${fileExtension}`;
+
+                const oldFile = path.resolve(process.cwd(), 'public', `./users/${req.params.id}`);
+
+                await fs.rmdir(oldFile, {recursive: true});
+                await fs.mkdir(path.resolve(process.cwd(), 'public', `./${photoDir}`), {recursive: true});
+                await avatar.mv(path.resolve(process.cwd(), 'public', `./${photoDir}`, `./${photoName}`));
+                await userService.update(req.params.id, {avatar: `${photoDir}/${photoName}` }, transaction);
+            }
 
             await transaction.commit();
             res.status(statusCodesEnum.OK).json(user);
@@ -79,7 +95,9 @@ module.exports = {
     delete: async (req, res, next) => {
         const transaction = await transactionInstance();
         try {
+            const oldFile = path.resolve(process.cwd(), 'public', `./users/${req.params.id}`);
             await userService.delete(req.params.id, transaction);
+            await fs.rmdir(oldFile, {recursive: true});
             await transaction.commit();
             res.status(statusCodesEnum.OK).end('User destroyed');
         } catch (err) {

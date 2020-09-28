@@ -15,7 +15,13 @@ usersRouter.post(
     files.checkUserPhotoCountMiddleware,
     userController.create);
 
-usersRouter.put('/:id', user.checkUserValidityMiddleware, userController.update);
+usersRouter.put(
+    '/:id',
+    user.checkUserValidityMiddleware,
+    files.checkFileMiddleware,
+    files.checkUserPhotoCountMiddleware,
+    userController.update);
+
 usersRouter.delete('/',  userController.delete);
 
 module.exports = usersRouter;
